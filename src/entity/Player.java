@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.ResourceLoader;
 
 public class Player extends Entity{
     GamePanel gp;
@@ -34,27 +35,19 @@ public class Player extends Entity{
         this.direction = "down";
     }
 
-    private BufferedImage loadSprite(String path) throws IOException{
-        try (InputStream is = getClass().getResourceAsStream(path)){
-            if (is == null){
-                throw new IllegalStateException("Recurso não encontrado no classpath: " + path);
-            }
-            return ImageIO.read(is);
-        }
-    }
 
-    public void getPlayerImage(){
-        try{
-            this.up1 = loadSprite("/player/boy_up_1.png");
-            this.up2 = loadSprite("/player/boy_up_2.png");
-            this.down1 = loadSprite("/player/boy_down_1.png");
-            this.down2 = loadSprite("/player/boy_down_2.png");
-            this.left1 = loadSprite("/player/boy_left_1.png");
-            this.left2 = loadSprite("/player/boy_left_2.png");
-            this.right1 = loadSprite("/player/boy_right_1.png");
-            this.right2 = loadSprite("/player/boy_right_2.png");
-        }catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Erro ao carregar imagem do Player" + e);
+    public void getPlayerImage() {
+        try {
+            this.up1    = ResourceLoader.loadImage(Player.class, "/player/boy_up_1.png");
+            this.up2    = ResourceLoader.loadImage(Player.class, "/player/boy_up_2.png");
+            this.down1  = ResourceLoader.loadImage(Player.class, "/player/boy_down_1.png");
+            this.down2  = ResourceLoader.loadImage(Player.class, "/player/boy_down_2.png");
+            this.left1  = ResourceLoader.loadImage(Player.class, "/player/boy_left_1.png");
+            this.left2  = ResourceLoader.loadImage(Player.class, "/player/boy_left_2.png");
+            this.right1 = ResourceLoader.loadImage(Player.class, "/player/boy_right_1.png");
+            this.right2 = ResourceLoader.loadImage(Player.class, "/player/boy_right_2.png");
+        } catch (IOException | IllegalStateException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao carregar sprites do Player", e);
         }
     }
 
